@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public class Weapon : MonoBehaviour
 {
@@ -85,7 +86,7 @@ public class Weapon : MonoBehaviour
 
 
             //recarga
-            if (Input.GetKeyDown(KeyCode.R) && bulletsLeft < magazineSize && isReloading == false)
+            if (Input.GetKeyDown(KeyCode.R) && bulletsLeft < magazineSize && isReloading == false && WeaponManager.Instance.CheckAmmoLeftFor(thisWeaponModel) > 0)
             {
                 Reload();
             }
@@ -108,6 +109,7 @@ public class Weapon : MonoBehaviour
 
 
     }
+   
 
     private void FireWeapon()
     {
@@ -151,9 +153,7 @@ public class Weapon : MonoBehaviour
         animator.SetTrigger("RELOAD");
         SoundManager.Instance.PlayReloadSound(thisWeaponModel);
         isReloading = true;
-
-        
-            readyToShoot = false;
+        readyToShoot = false;
               
 
         Invoke("ReloadCompleted", reloadTime);
@@ -162,7 +162,27 @@ public class Weapon : MonoBehaviour
 
     private void ReloadCompleted()
     {
-        bulletsLeft = magazineSize;
+        //Metodo para perder balas en provedor
+        //if (WeaponManager.Instance.CheckAmmoLeftFor(thisWeaponModel) > magazineSize)
+        //{
+        //    bulletsLeft = magazineSize;
+        //    WeaponManager.Instance.DecreaseTotalAmmo(bulletsLeft, thisWeaponModel);
+        //}
+        //else
+        //{
+        //    bulletsLeft = WeaponManager.Instance.CheckAmmoLeftFor(thisWeaponModel);
+        //    WeaponManager.Instance.DecreaseTotalAmmo(bulletsLeft, thisWeaponModel);
+        //}
+
+        //Mantener balas en proveedor y sumar las de reserva
+        int bulletsNeeded = magazineSize - bulletsLeft;
+        int availableAmmo = WeaponManager.Instance.CheckAmmoLeftFor(thisWeaponModel);
+        int bulletsToReload = Math.Min(bulletsNeeded, availableAmmo);
+
+        bulletsLeft += bulletsToReload;
+
+        WeaponManager.Instance.DecreaseTotalAmmo(bulletsToReload, thisWeaponModel);
+
         isReloading = false;
         readyToShoot = true;
     }
