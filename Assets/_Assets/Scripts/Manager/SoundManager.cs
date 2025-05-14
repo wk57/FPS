@@ -20,6 +20,9 @@ public class SoundManager : MonoBehaviour
     public AudioSource reloadingSoundAk47;
     public AudioSource emptyAk47;
 
+    public AudioSource throwablesChannel;
+    public AudioClip grenadeSound;
+
 
     private void Awake()
     {

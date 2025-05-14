@@ -6,6 +6,7 @@ using System;
 public class Weapon : MonoBehaviour
 {
     public bool isActiveWeapon;
+    public int weaponDamage;
 
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] Transform bulletSpawn;
@@ -28,18 +29,23 @@ public class Weapon : MonoBehaviour
     public int bulletPerBurst = 1;
     [SerializeField] int currentBurst;
 
-    [SerializeField] float spreadIntesnsty;
+    [SerializeField] float spreadIntensity;
+    [SerializeField] float hipFireSpread;
+    [SerializeField] float adsFireSpread;
+
 
     [SerializeField] GameObject muzzleEffect;
     internal Animator animator;
 
-    //loading ammo
+    //REloading ammo
     [SerializeField] float reloadTime;
     public int magazineSize, bulletsLeft;
     [SerializeField] bool isReloading;
 
     public Vector3 spawnPosition;
     public Vector3 spawnRotation;
+
+    private bool isADS;
     
     //SABER QUE ARMA ES
     public enum WeaponModel
@@ -57,16 +63,33 @@ public class Weapon : MonoBehaviour
         animator = GetComponent<Animator>();
 
         bulletsLeft = magazineSize;
+
+        spreadIntensity = hipFireSpread;
     }
 
 
-    // Update is called once per frame
+    // -----------------------------------------------UPDATE----------------------------------------
     void Update()
     {
 
 
         if (isActiveWeapon)
         {
+            foreach (Transform child in transform)
+            {
+                child.gameObject.layer = LayerMask.NameToLayer("WeaponRender");
+            }
+
+            if (Input.GetMouseButtonDown(1))
+            {
+                EnterADS();
+            }
+
+            if (Input.GetMouseButtonUp(1))
+            {
+                ExitADS();
+            }
+
 
             GetComponent<Outline>().enabled = false;
 
@@ -104,19 +127,51 @@ public class Weapon : MonoBehaviour
                 currentBurst = bulletPerBurst;
                 FireWeapon();
             }
-           
+
+        }
+        else {
+            foreach (Transform child in transform)
+            {
+                child.gameObject.layer = LayerMask.NameToLayer("WeaponRender");
+            }
         }
 
 
     }
    
 
+    //-----------------------------------FUERA DE UPDATE--------------------------------------------------\\
+    private void EnterADS()
+    {
+        animator.SetTrigger("ENTERADS");
+        isADS = true;
+        HUDManager.Instance.crossHair.SetActive(false);
+        spreadIntensity = adsFireSpread;
+    }
+
+    private void ExitADS()
+    {
+        animator.SetTrigger("EXITADS");
+        isADS = false;
+        HUDManager.Instance.crossHair.SetActive(true);
+        spreadIntensity = hipFireSpread;
+    }
+
     private void FireWeapon()
     {
         bulletsLeft--;
 
         muzzleEffect.GetComponent<ParticleSystem>().Play();
-        animator.SetTrigger("RECOIL");
+
+        if (isADS)
+        {
+            animator.SetTrigger("ADSRECOIL");
+        }
+        else 
+        
+        {
+            animator.SetTrigger("RECOIL");
+        }
 
         SoundManager.Instance.PlayShootingSound(thisWeaponModel);
 
@@ -125,6 +180,9 @@ public class Weapon : MonoBehaviour
         Vector3 shootingDirection = CalculateDirectionaAndSpread().normalized;
 
         GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.position, Quaternion.identity);
+
+        Bullet bul =bullet.GetComponent<Bullet>();
+        bul.bulletDamage = weaponDamage;
 
         bullet.transform.forward = shootingDirection;
 
@@ -211,8 +269,8 @@ public class Weapon : MonoBehaviour
 
         Vector3 direction = targetPoint - bulletSpawn.position;
 
-        float x = UnityEngine.Random.Range(-spreadIntesnsty, spreadIntesnsty);
-        float y = UnityEngine.Random.Range(-spreadIntesnsty, spreadIntesnsty);
+        float x = UnityEngine.Random.Range(-spreadIntensity, spreadIntensity);
+        float y = UnityEngine.Random.Range(-spreadIntensity, spreadIntensity);
 
         return direction + new Vector3(x, y, 0);
     }

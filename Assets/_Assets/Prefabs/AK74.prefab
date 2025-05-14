@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1376935535650586275}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: 'BulletSpawn '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 8676557757147740538}
   - component: {fileID: 1231672304199778516}
   - component: {fileID: 5766170059543261374}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: AK74
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139,6 +139,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActiveWeapon: 0
+  weaponDamage: 30
   bulletPrefab: {fileID: 1131796336063170823, guid: 14802fbfce4e38845bfbcb3d0783dc1e, type: 3}
   bulletSpawn: {fileID: 1376935535650586275}
   isShooting: 0
@@ -149,7 +150,9 @@ MonoBehaviour:
   shootingDelay: 0.15
   bulletPerBurst: 1
   currentBurst: 0
-  spreadIntesnsty: 0.35
+  spreadIntensity: 0
+  hipFireSpread: 0.8
+  adsFireSpread: 0.28
   muzzleEffect: {fileID: 7262293939030881824}
   reloadTime: 2.5
   magazineSize: 30
@@ -230,7 +233,7 @@ GameObject:
   - component: {fileID: 1031926219416449908}
   - component: {fileID: 5714106895654477604}
   - component: {fileID: 8344695678720834719}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Bolt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -316,7 +319,7 @@ GameObject:
   - component: {fileID: 8982460514360854449}
   - component: {fileID: 1207986210691058445}
   - component: {fileID: 5276591966884163830}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Mag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -402,7 +405,7 @@ GameObject:
   - component: {fileID: 8602708432393054292}
   - component: {fileID: 6462552012105919667}
   - component: {fileID: 4620950582428934986}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: MuzzleFlashEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5188,7 +5191,7 @@ GameObject:
   - component: {fileID: 7995763537340738938}
   - component: {fileID: 5992583668194569829}
   - component: {fileID: 5107917048346861093}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}

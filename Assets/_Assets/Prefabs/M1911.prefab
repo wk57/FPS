@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5783774395588514957}
   - component: {fileID: 1678154972922620247}
   - component: {fileID: 1111935970219730755}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6823534135534026833}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: CINEMA_4D_Editor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,7 +128,7 @@ GameObject:
   - component: {fileID: 2546367828180134830}
   - component: {fileID: 6654865070576560716}
   - component: {fileID: 6394937060664775805}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Magazin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -216,7 +216,7 @@ GameObject:
   - component: {fileID: 1191586123701667413}
   - component: {fileID: 2264450412024031443}
   - component: {fileID: 3012227593527953865}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: M1911
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -254,6 +254,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActiveWeapon: 0
+  weaponDamage: 10
   bulletPrefab: {fileID: 1131796336063170823, guid: 14802fbfce4e38845bfbcb3d0783dc1e, type: 3}
   bulletSpawn: {fileID: 4366169321555902515}
   isShooting: 0
@@ -264,7 +265,9 @@ MonoBehaviour:
   shootingDelay: 0.19
   bulletPerBurst: 1
   currentBurst: 0
-  spreadIntesnsty: 0.13
+  spreadIntensity: 0
+  hipFireSpread: 0.4
+  adsFireSpread: 0.06
   muzzleEffect: {fileID: 5963516509227041765}
   reloadTime: 1.4
   magazineSize: 7
@@ -345,7 +348,7 @@ GameObject:
   - component: {fileID: 9048251712468684693}
   - component: {fileID: 200974766920655943}
   - component: {fileID: 2610417016570039239}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: M1911
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -435,7 +438,7 @@ GameObject:
   - component: {fileID: 5318738495598012585}
   - component: {fileID: 2017831001728648724}
   - component: {fileID: 6671197852797973953}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: MuzzleFlashEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5219,7 +5222,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4366169321555902515}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: BulletSpawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5253,7 +5256,7 @@ GameObject:
   - component: {fileID: 2739775891825180764}
   - component: {fileID: 7887371351398014929}
   - component: {fileID: 8122290235453729796}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Hammer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5339,7 +5342,7 @@ GameObject:
   - component: {fileID: 7219733845161836841}
   - component: {fileID: 5659224207047379282}
   - component: {fileID: 6641708298423792103}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Slide
   m_TagString: Untagged
   m_Icon: {fileID: 0}

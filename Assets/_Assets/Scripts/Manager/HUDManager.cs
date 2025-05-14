@@ -30,7 +30,10 @@ public class HUDManager : MonoBehaviour
     public Image tacticalUI;
     public TextMeshProUGUI tacticalAmmountUI;
 
-    public Sprite emptySlot;    
+    public Sprite emptySlot;
+    public Sprite greySlot;
+
+    public GameObject crossHair;
 
 
     private void Awake()
@@ -76,7 +79,14 @@ public class HUDManager : MonoBehaviour
             activeWeaponUI.sprite =emptySlot;
             unActiveWeaponUI.sprite=emptySlot;
         }
+
+        if (WeaponManager.Instance.lethalsCount <= 0)
+        {
+            letahlUI.sprite = greySlot;
+        }
     }
+
+    //final update--------------------------------------------
 
     private Sprite GetWeaponSprite(Weapon.WeaponModel model)
     {
@@ -120,7 +130,15 @@ public class HUDManager : MonoBehaviour
         return null;
     }
 
+    internal void UpdateThrowables()
+    {
+        lethalAmmountUI.text = $"{WeaponManager.Instance.lethalsCount}";
 
-
-
+        switch (WeaponManager.Instance.equippedLethalType)
+        {
+            case Throwable.ThrowableType.Grenade:                
+                letahlUI.sprite = Resources.Load<GameObject>("Grenade").GetComponent<SpriteRenderer>().sprite;
+                break;
+        }
+    }
 }

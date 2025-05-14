@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7596111308337951111}
   - component: {fileID: 7436901540861431391}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: AssaulRifle_Ammo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
