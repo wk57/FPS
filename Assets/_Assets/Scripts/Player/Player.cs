@@ -3,6 +3,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -11,11 +12,17 @@ public class Player : MonoBehaviour
     public TextMeshProUGUI playerHP;
 
     public GameObject gameOverUI;
-    public bool isDead; 
+    public bool isDead;
+
+    public string menuSceneName = "MainMenu";
 
     private void Start()
     {
         playerHP.text = $"Health : {HP}";
+        if (gameOverUI != null)
+        {
+            gameOverUI.SetActive(false);
+        }
     }
 
     public void TakeDamage(int damage)
@@ -24,14 +31,13 @@ public class Player : MonoBehaviour
 
         if (HP <= 0)
         {
-            print("niggas dead");
+            print("Player is dead");
             PlayerDead();
             isDead = true;
-
         }
         else
         {
-            print("ay");
+            print("Player took damage");
             StartCoroutine(BloodyScreenEffect());
             playerHP.text = $"Health : {HP}";
             SoundManager.Instance.PlayerChannel.PlayOneShot(SoundManager.Instance.playerHurt);
@@ -40,37 +46,46 @@ public class Player : MonoBehaviour
 
     private void PlayerDead()
     {
-
         SoundManager.Instance.PlayerChannel.PlayOneShot(SoundManager.Instance.playerDeath);
 
         GetComponent<MouseMovement>().enabled = false;
         GetComponent<PlayerMovement>().enabled = false;
 
-        //die
-
         GetComponentInChildren<Animator>().enabled = true;
+
         playerHP.gameObject.SetActive(false);
 
-        GetComponent<ScreenFader>().StartFade();
-        StartCoroutine(ShowGameOverUI());
+        if (GetComponent<ScreenFader>() != null)
+        {
+            GetComponent<ScreenFader>().StartFade();
+        }
+
+        StartCoroutine(ShowGameOverUIAndLoadMenu());
     }
 
-    private IEnumerator ShowGameOverUI()
+    private IEnumerator ShowGameOverUIAndLoadMenu()
     {
-        throw new NotImplementedException();
+        yield return new WaitForSeconds(2f);
+
+        if (gameOverUI != null)
+        {
+            gameOverUI.SetActive(true);
+        }
+
+        yield return new WaitForSeconds(3f);
+
+        SceneManager.LoadScene(menuSceneName);
     }
 
     private IEnumerator BloodyScreenEffect()
     {
-        if (bloodyScreen.activeInHierarchy == false)
+        if (bloodyScreen != null && !bloodyScreen.activeInHierarchy)
         {
-            yield return new WaitForSeconds(1f);
-            gameOverUI.gameObject.SetActive (true);
+            bloodyScreen.SetActive(true);
         }
 
         var image = bloodyScreen.GetComponentInChildren<Image>();
 
-        // Set the initial alpha value to 1 (fully visible).
         Color startColor = image.color;
         startColor.a = 1f;
         image.color = startColor;
@@ -80,24 +95,17 @@ public class Player : MonoBehaviour
 
         while (elapsedTime < duration)
         {
-            // Calculate the new alpha value using Lerp.
             float alpha = Mathf.Lerp(1f, 0f, elapsedTime / duration);
 
-            // Update the color with the new alpha value.
             Color newColor = image.color;
             newColor.a = alpha;
             image.color = newColor;
 
-            // Increment the elapsed time.
             elapsedTime += Time.deltaTime;
 
-            yield return null; ; // Wait for the next frame.
+            yield return null;
         }
-
-        if (bloodyScreen.activeInHierarchy == false)
-        {
-            bloodyScreen.SetActive(true);
-        }
+        bloodyScreen.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -106,11 +114,8 @@ public class Player : MonoBehaviour
         {
             if (isDead == false)
             {
-                
-            TakeDamage(other.gameObject.GetComponent<ZombieHand>().damage);
+                TakeDamage(other.gameObject.GetComponent<ZombieHand>().damage);
             }
         }
     }
-
-
 }
