@@ -23,6 +23,18 @@ public class SoundManager : MonoBehaviour
     public AudioSource throwablesChannel;
     public AudioClip grenadeSound;
 
+    public AudioClip zombieWalk;
+    public AudioClip zombieChase;
+    public AudioClip zombieAttack;
+    public AudioClip zombieHurt;
+    public AudioClip zombieDeath;
+
+    public AudioSource ZombieChannel;
+    public AudioSource ZombieChannel2;
+
+    public AudioSource PlayerChannel;
+    public AudioClip playerHurt;
+    public AudioClip playerDeath;
 
     private void Awake()
     {
